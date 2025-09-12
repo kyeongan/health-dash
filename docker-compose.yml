@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  frontend:
+    build: .
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+  backend:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.11
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:80"
+    environment:
+      - MODULE_NAME=main
+      - VARIABLE_NAME=app

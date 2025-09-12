@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Favicon based on the home page icon (healthdash.png) -->
+<!-- Replace this with a true favicon.ico or PNG for production if needed -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <image href="../src/assets/healthdash.png" height="64" width="64"/>
+</svg>
