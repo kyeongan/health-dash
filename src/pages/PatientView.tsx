@@ -42,6 +42,23 @@ function DeletePatientButton({ id }: { id: string }) {
   );
 }
 
+
+// Add EditPatientButton component
+function EditPatientButton({ id }: { id: string }) {
+  const navigate = useNavigate();
+  return (
+    <Button
+      color="primary"
+      variant="outlined"
+      size="small"
+      onClick={() => navigate(`/patients/${id}/edit`)}
+      sx={{ ml: 2 }}
+    >
+      Edit
+    </Button>
+  );
+}
+
 export default function PatientView() {
   const { id } = useParams();
   const [patient, setPatient] = useState<Patient | null>(null);
@@ -149,8 +166,10 @@ export default function PatientView() {
             </Typography>
           </Box>
         </Box>
+        {/* Add Edit and Delete buttons */}
+        <EditPatientButton id={patient.id} />
         <DeletePatientButton id={patient.id} />
-  </Box>
+      </Box>
 {/* // Delete button component (must be outside PatientView) */}
 {/* import Button from '@mui/material/Button'; */}
 {/* import { useNavigate } from 'react-router-dom'; */}

@@ -94,7 +94,8 @@ export default function PatientForm({ initialData, onSubmit }: PatientFormProps)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-  const patient: Patient = {
+    // Always preserve id, createdAt, and existing documents when editing
+    const patient: Patient = {
       id: initialData?.id || Math.random().toString(36).slice(2),
       firstName,
       lastName,
@@ -113,12 +114,14 @@ export default function PatientForm({ initialData, onSubmit }: PatientFormProps)
         status,
       },
       insurance,
-  documents: [], // File upload handling below
+      documents: initialData?.documents ? [...initialData.documents] : [],
       createdAt: initialData?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     // File upload: just store file names for now
     if (photo) {
+      // Remove any existing photo_id document
+      patient.documents = patient.documents.filter(doc => doc.type !== 'photo_id');
       patient.documents.push({
         id: `${patient.id}-photo`,
         type: 'photo_id',
