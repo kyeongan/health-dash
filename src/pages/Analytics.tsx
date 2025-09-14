@@ -4,7 +4,7 @@ import PatientDemographicsChart from '../components/PatientDemographicsChart';
 
 export default function Analytics() {
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto', mt: 4, p: { xs: 2, md: 2 } }}>
+    <Box sx={{ mx: 'auto', md: 2 }}>
       <Typography variant="h4" fontWeight={700} gutterBottom color="primary.main">
         Analytics
       </Typography>
