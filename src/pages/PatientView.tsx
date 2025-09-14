@@ -176,10 +176,10 @@ export default function PatientView() {
 
   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
     {/* Main Info Card */}
-  <Box sx={{ flex: '1 1 60%', minWidth: 320, maxWidth: '100%' }}>
+  <Box sx={{ flex: '1 1 100%', minWidth: 320, maxWidth: '100%' }}>
           <Card elevation={2} sx={{ borderRadius: 3, p: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
                 Personal & Emergency Info
               </Typography>
               <Divider sx={{ mb: 2 }} />
@@ -232,11 +232,11 @@ export default function PatientView() {
   <Box sx={{ flex: '1 1 35%', minWidth: 260, maxWidth: '100%' }}>
           <Card elevation={2} sx={{ borderRadius: 3, p: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Medical Info</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>Medical Info</Typography>
               <Divider sx={{ mb: 2 }} />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Box>
-                  <Typography color="text.secondary" fontWeight={500} display="inline">Status: </Typography>
+                  <Typography fontWeight={700} display="inline">Status: </Typography>
                   <Chip label={patient.medicalInfo.status} color={patient.medicalInfo.status === 'active' ? 'success' : patient.medicalInfo.status === 'critical' ? 'error' : 'default'} size="small" sx={{ ml: 1, verticalAlign: 'middle' }} />
                 </Box>
                 <Typography><b>Blood Type:</b> {patient.medicalInfo.bloodType}</Typography>
@@ -251,7 +251,7 @@ export default function PatientView() {
   <Box sx={{ flex: '1 1 35%', minWidth: 260, maxWidth: '100%' }}>
           <Card elevation={2} sx={{ borderRadius: 3, p: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Insurance</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>Insurance</Typography>
               <Divider sx={{ mb: 2 }} />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography><b>Provider:</b> {patient.insurance.provider}</Typography>
@@ -268,16 +268,16 @@ export default function PatientView() {
   {/* Medications Table */}
   <Box
     sx={{
-      width: { xs: '100%', md: '45%' },
+      width: { xs: '100%', md: '100%' },
       minWidth: 260,
       maxWidth: '100%',
       mt: { xs: 2, md: 2 },
       mb: { xs: 2, md: 0 },
     }}
   >
-          <Card elevation={1} sx={{ borderRadius: 3, p: 2, background: '#fafbfc', mt: 2 }}>
+          <Card elevation={1} sx={{ borderRadius: 3, p: 2, mt: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Current Medications</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>Current Medications</Typography>
               <Divider sx={{ mb: 1 }} />
               {patient.medicalInfo.currentMedications.length ? (
                 <TableContainer component={Paper} sx={{ boxShadow: 'none', mt: 1 }}>
@@ -315,16 +315,16 @@ export default function PatientView() {
   {/* Documents Table */}
   <Box
     sx={{
-      width: { xs: '100%', md: '45%' },
+      width: { xs: '100%', md: '100%' },
       minWidth: 260,
       maxWidth: '100%',
       mt: { xs: 0, md: 2 },
       mb: { xs: 2, md: 0 },
     }}
   >
-          <Card elevation={1} sx={{ borderRadius: 3, p: 2, background: '#fafbfc', mt: 2 }}>
+          <Card elevation={1} sx={{ borderRadius: 3, p: 2, mt: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>Documents</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>Documents</Typography>
               <Divider sx={{ mb: 1 }} />
               {patient.documents.length ? (
                 <TableContainer component={Paper} sx={{ boxShadow: 'none', mt: 1 }}>
