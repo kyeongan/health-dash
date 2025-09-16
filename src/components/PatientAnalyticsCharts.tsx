@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppStore } from '../store/appStore';
-
+import { getPatients } from '../services/api';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -21,11 +21,7 @@ export default function PatientAnalyticsCharts() {
   const addNotification = useAppStore((s) => s.addNotification);
 
   useEffect(() => {
-    fetch('http://localhost:8000/patients')
-      .then((res) => {
-        if (!res.ok) throw new Error(`Network response was not ok (${res.status})`);
-        return res.json();
-      })
+    getPatients()
       .then((patients: Patient[]) => {
         // Top Diagnoses
         const diagCounts: Record<string, number> = {};
@@ -49,11 +45,9 @@ export default function PatientAnalyticsCharts() {
         setInsuranceData(
           Object.entries(insCounts).map(([name, value]) => ({ name, value }))
         );
-  // setError(null) removed; notification handles error display
       })
       .catch(() => {
         addNotification({ message: 'Network error: Could not connect to server', type: 'error' });
-  // setError removed; notification handles error display
         setDiagnosisData([]);
         setInsuranceData([]);
       });

@@ -1,5 +1,6 @@
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { useEffect, useState } from 'react';
+import { getPatients } from '../services/api';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -40,11 +41,7 @@ export default function PatientDemographicsChart() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/patients')
-      .then((res) => {
-        if (!res.ok) throw new Error(`Network response was not ok (${res.status})`);
-        return res.json();
-      })
+    getPatients()
       .then((patients: Patient[]) => {
         // Gender
         const genderCounts: Record<string, number> = {};

@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { getPatient, createPatient, updatePatient } from '../services/api';
 import PatientForm from './PatientForm';
 import type { Patient } from '../types/patient';
 
@@ -12,8 +13,7 @@ export default function PatientFormPage() {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`http://localhost:8000/patients/${encodeURIComponent(id)}`)
-        .then((res) => res.json())
+      getPatient(id)
         .then((data) => {
           setInitialData(data);
           setLoading(false);
@@ -24,19 +24,9 @@ export default function PatientFormPage() {
 
   const handleSubmit = async (patient: Patient) => {
     if (id) {
-      // Edit mode
-      await fetch(`http://localhost:8000/patients/${encodeURIComponent(id)}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(patient),
-      });
+      await updatePatient(id, patient);
     } else {
-      // Create mode
-      await fetch('http://localhost:8000/patients', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(patient),
-      });
+      await createPatient(patient);
     }
     navigate('/patients');
   };

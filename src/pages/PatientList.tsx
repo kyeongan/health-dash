@@ -11,6 +11,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
+import { getPatients } from '../services/api';
 import { useAppStore } from '../store/appStore';
 import type { Patient } from '../types/patient';
 import { useNavigate } from 'react-router-dom';
@@ -26,25 +27,13 @@ export default function PatientList() {
   const [loading, setLoading] = useState(true);
   const addNotification = useAppStore((s) => s.addNotification);
   useEffect(() => {
-    fetch('http://localhost:8000/patients')
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 401 || res.status === 403) {
-            addNotification({ message: 'Permission denied (not authorized)', type: 'error' });
-          } else {
-            addNotification({ message: `Network error: ${res.statusText}`, type: 'error' });
-          }
-          setLoading(false);
-          return Promise.reject();
-        }
-        return res.json();
-      })
+    getPatients()
       .then((data) => {
         setPatients(data);
         setLoading(false);
       })
-      .catch(() => {
-        addNotification({ message: 'Network error: Could not connect to server', type: 'error' });
+      .catch((err) => {
+        addNotification({ message: err.message || 'Network error: Could not connect to server', type: 'error' });
         setLoading(false);
       });
   }, [addNotification]);

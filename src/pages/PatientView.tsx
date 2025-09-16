@@ -14,6 +14,7 @@ import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
+import { getPatient } from '../services/api';
 import { useAppStore } from '../store/appStore';
 import type { Patient } from '../types/patient';
 import Avatar from '@mui/material/Avatar';
@@ -25,13 +26,14 @@ import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 // Delete button component
+import { deletePatient } from '../services/api';
 function DeletePatientButton({ id }: { id: string }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this patient?')) return;
     setLoading(true);
-    await fetch(`http://localhost:8000/patients/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    await deletePatient(id);
     setLoading(false);
     navigate('/patients');
   };
@@ -70,40 +72,13 @@ export default function PatientView() {
       setLoading(false);
       return;
     }
-    fetch(`http://localhost:8000/patients/${encodeURIComponent(id)}`)
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 401 || res.status === 403) {
-            addNotification({ message: 'Permission denied (not authorized)', type: 'error' });
-            setPatient(null);
-            setLoading(false);
-            throw new Error('handled');
-          } else if (res.status === 404) {
-            // Patient not found, handled by render below
-            setPatient(null);
-            setLoading(false);
-            throw new Error('handled');
-          } else {
-            addNotification({ message: `Network error: ${res.statusText}`, type: 'error' });
-            setPatient(null);
-            setLoading(false);
-            throw new Error('handled');
-          }
-        }
-        return res.json();
-      })
+    getPatient(id)
       .then((data) => {
         setPatient(data);
         setLoading(false);
-
       })
       .catch((err) => {
-        if (err && err.message === 'handled') {
-          // Already handled above, do nothing
-          return;
-        }
-        // Only show notification for real network errors
-        addNotification({ message: 'Network error: Could not connect to server', type: 'error' });
+        addNotification({ message: err.message || 'Network error: Could not connect to server', type: 'error' });
         setPatient(null);
         setLoading(false);
       });
