@@ -58,7 +58,7 @@ export default function PatientList() {
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2, p: 2 }}>
         <Box>
           <Typography variant="h4" fontWeight={700} color="primary.main">
-            Patients ({patients.length} total)
+            Patients
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Showing {((page - 1) * itemsPerPage) + 1}-{Math.min(page * itemsPerPage, allFilteredPatients.length)} of {allFilteredPatients.length} {search ? 'filtered ' : ''}patients
