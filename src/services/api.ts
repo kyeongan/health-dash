@@ -1,52 +1,30 @@
+import { patients as mockPatients } from '../mocks/patients';
+
 export async function deletePatient(id: string) {
-  const res = await fetch(
-    `http://localhost:8000/patients/${encodeURIComponent(id)}`,
-    {
-      method: 'DELETE',
-    }
-  );
-  if (!res.ok) throw new Error(`Network error (${res.status})`);
-  return res.json();
+  const idx = mockPatients.findIndex((p) => p.id === id);
+  if (idx === -1) throw new Error('Patient not found');
+  mockPatients.splice(idx, 1);
+  return Promise.resolve({ success: true });
 }
+
 export async function createPatient(patient: any) {
-  const res = await fetch('http://localhost:8000/patients', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(patient),
-  });
-  if (!res.ok) throw new Error(`Network error (${res.status})`);
-  return res.json();
+  mockPatients.push({ ...patient, id: (mockPatients.length + 1).toString() });
+  return Promise.resolve(patient);
 }
 
 export async function updatePatient(id: string, patient: any) {
-  const res = await fetch(
-    `http://localhost:8000/patients/${encodeURIComponent(id)}`,
-    {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(patient),
-    }
-  );
-  if (!res.ok) throw new Error(`Network error (${res.status})`);
-  return res.json();
+  const idx = mockPatients.findIndex((p) => p.id === id);
+  if (idx === -1) throw new Error('Patient not found');
+  mockPatients[idx] = { ...patient, id };
+  return Promise.resolve(mockPatients[idx]);
 }
+
 export async function getPatient(id: string) {
-  const res = await fetch(
-    `http://localhost:8000/patients/${encodeURIComponent(id)}`
-  );
-  if (!res.ok) {
-    if (res.status === 401 || res.status === 403) {
-      throw new Error('Permission denied (not authorized)');
-    } else if (res.status === 404) {
-      throw new Error('Patient not found');
-    } else {
-      throw new Error(`Network error (${res.status})`);
-    }
-  }
-  return res.json();
+  const patient = mockPatients.find((p) => p.id === id);
+  if (!patient) throw new Error('Patient not found');
+  return Promise.resolve(patient);
 }
+
 export async function getPatients() {
-  const res = await fetch('http://localhost:8000/patients');
-  if (!res.ok) throw new Error(`Network error (${res.status})`);
-  return res.json();
+  return Promise.resolve([...mockPatients]);
 }
