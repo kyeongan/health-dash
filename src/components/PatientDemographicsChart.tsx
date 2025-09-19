@@ -1,38 +1,26 @@
-import { PieChart, Pie, Cell, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import { useEffect, useState } from 'react';
-import { getPatients } from '../services/api';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { patients } from '../mocks/patients';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-interface Patient {
-  id: number;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  dateOfBirth: string;
-}
-
-const COLORS = ['#1976d2', '#e57373', '#ffd600', '#64b5f6', '#81c784'];
-
-function getAge(dob: string) {
-  const birth = new Date(dob);
-  const now = new Date();
-  let age = now.getFullYear() - birth.getFullYear();
-  const m = now.getMonth() - birth.getMonth();
-  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
-    age--;
-  }
-  return age;
-}
-
-function getAgeGroup(age: number) {
-  if (age < 18) return '<18';
-  if (age < 30) return '18-29';
-  if (age < 45) return '30-44';
-  if (age < 65) return '45-64';
-  return '65+';
-}
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 export default function PatientDemographicsChart() {
