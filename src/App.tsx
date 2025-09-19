@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import DashboardLayout from './layouts/DashboardLayout';
 import Home from './pages/Home';
 import PatientList from './pages/PatientList';
+import PatientListScroll from './pages/PatientListScroll';
 import PatientView from './pages/PatientView';
 import NotFound from './pages/NotFound';
 import PatientFormPage from './pages/PatientFormPage';
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/patients" element={<PatientList />} />
+            <Route path="/patients-scroll" element={<PatientListScroll />} />
             <Route path="/patients/new" element={<PatientFormPage />} />
             <Route path="/patients/:id" element={<PatientView />} />
             <Route path="/patients/:id/edit" element={<PatientFormPage />} />
