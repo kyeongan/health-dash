@@ -5,13 +5,10 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
@@ -26,6 +23,9 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { IconButton, Toolbar, Typography } from '@mui/material';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
+import { useTheme } from '../contexts/ThemeContext';
 
 const drawerWidth = 220;
 
@@ -34,6 +34,7 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const { mode, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
@@ -355,6 +356,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           >
             Health Dash
           </Typography>
+          {/* Add theme toggle button on the right */}
+          <IconButton color="inherit" onClick={toggleTheme}>
+            {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'flex', pt: 8, minHeight: 'calc(100vh - 56px - 48px)' }}>
