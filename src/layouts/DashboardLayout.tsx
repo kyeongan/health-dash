@@ -357,9 +357,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             Health Dash
           </Typography>
           {/* Add theme toggle button on the right */}
-          <IconButton color="inherit" onClick={toggleTheme}>
+            <Box sx={{ flexGrow: 1 }} />
+            Theme <IconButton color="inherit" onClick={toggleTheme} sx={{ ml: 2 }}>
             {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
-          </IconButton>
+            </IconButton>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'flex', pt: 8, minHeight: 'calc(100vh - 56px - 48px)' }}>
